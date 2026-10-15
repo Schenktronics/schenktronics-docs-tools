@@ -17,7 +17,7 @@ A product repo needs two files.
 {
   "product": "Passive Multiple",
   "pcbVersion": "v1.0",
-  "repo": "schenkzoola/ST01-multiple",
+  "repo": "Schenktronics/ST01-multiple",
   "branch": "master",
   "documents": [
     { "src": "manual.md", "out": "passive-multiple-manual.pdf", "title": "User Manual" },
@@ -29,7 +29,7 @@ A product repo needs two files.
 **2. `.github/workflows/pdf.yml`**: copy [`examples/pdf.yml`](examples/pdf.yml). Its main step is:
 
 ```yaml
-- uses: schenkzoola/schenktronics-docs-tools/pdf@v1
+- uses: Schenktronics/schenktronics-docs-tools/pdf@v1
 ```
 
 Whenever the docs change, the Action rebuilds the PDFs into `docs/pdf/` and commits any that changed. After updating this repo, run each product's "Build PDFs" workflow by hand from its Actions tab to pick up the change.
