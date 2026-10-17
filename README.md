@@ -138,6 +138,6 @@ For a change that would break existing product configs, release it as `v2` inste
 
 ## License
 
-This tooling is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change and share it for noncommercial purposes. Commercial use needs permission from Nathan Schenk.
+This tooling is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). You may use, change and share it for noncommercial purposes. Commercial use needs permission from Schenktronics LLC.
 
-The Schenktronics name and logo, including the logo in the test fixture, are trademarks of Nathan Schenk and are not covered by this license.
+The Schenktronics name and logo, including the logo in the test fixture, are trademarks of Schenktronics LLC and are not covered by this license.

@@ -1,4 +1,4 @@
-Required Notice: Copyright 2026 Nathan Schenk (https://schenktronics.com)
+Required Notice: Copyright 2026 Schenktronics LLC (https://schenktronics.com)
 
 # PolyForm Noncommercial License 1.0.0
 
