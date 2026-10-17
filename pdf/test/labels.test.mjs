@@ -33,10 +33,10 @@ describe("building labels", () => {
       ["box-assembled.pdf", "box-kit.pdf", "insert-assembled.pdf", "insert-kit.pdf"]);
   });
 
-  test("makes each label a single 3 × 5 in page", () => {
+  test("makes each label a single 3 x 5 in page", () => {
     for (const file of written) {
       const bytes = readFileSync(file).toString("latin1");
-      assert.match(bytes, /\/MediaBox \[0 0 216 360\]/, `${file} is 216 × 360 points`);
+      assert.match(bytes, /\/MediaBox \[0 0 216 360\]/, `${file} is 216 x 360 points`);
       assert.equal(pdfs[file.split("/").pop()].pages.length, 1, `${file} has one page`);
     }
   });
@@ -60,7 +60,7 @@ describe("building labels", () => {
 
   test("puts the checklist or quick-start notes on the insert", () => {
     assert.ok(pdfs["insert-kit.pdf"].text.includes("In this kit"));
-    assert.ok(pdfs["insert-kit.pdf"].text.includes("1 × faceplate"));
+    assert.ok(pdfs["insert-kit.pdf"].text.includes("1 x faceplate"));
     assert.ok(pdfs["insert-kit.pdf"].text.includes("Solder not included."));
     assert.ok(pdfs["insert-assembled.pdf"].text.includes("Fit it in any 4HP space."));
   });

@@ -1,4 +1,4 @@
-# Sample Module — User Manual
+# Sample Module: User Manual
 
 <img src="images/photo.jpg" alt="Front panel photo" width="120">
 

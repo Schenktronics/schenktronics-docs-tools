@@ -16,7 +16,7 @@ const require = createRequire(import.meta.url);
 const DEFAULTS = {
   brand: "Schenktronics",
   logo: "images/logo-dark.png",
-  footer: "schenktronics.com · CC BY-NC-SA 4.0",
+  footer: "schenktronics.com - CC BY-NC-SA 4.0",
   paper: "Letter",
   docsDir: "..",
   outDir: ".",
@@ -100,7 +100,7 @@ export function lastChanged(file) {
 }
 
 // Links to other files in the repo point at GitHub, since the PDF travels on its own.
-// Anchors (#…) and absolute URLs are left alone.
+// Anchors (#...) and absolute URLs are left alone.
 export function rewriteLinks(html, { docsDir, rootDir, blobBase }) {
   return html.replace(/href="([^"#:][^":]*)"/g, (_, target) => {
     const repoPath = relative(rootDir, resolve(docsDir, target)).split("\\").join("/");
@@ -122,7 +122,7 @@ export function pinTimestamps(pdf, date) {
 // Chrome tags table header cells for accessibility with IDs taken from its
 // internal element numbers, like (node00000030). Those numbers vary between
 // runs, and not even their order is stable, so a document with a table could
-// change on every build. Renumber them 1, 2, 3… in the order they're defined
+// change on every build. Renumber them 1, 2, 3... in the order they're defined
 // in the file (the object order is stable), then re-sort the PDF's ID index,
 // which must stay in order. Every name keeps its length, so the file's byte
 // offsets stay valid.
@@ -176,7 +176,7 @@ export function renderHtml(config, doc, body, qr = "") {
   ${brand}
   <h1>${e(config.product)}</h1>
   <div class="doc-title">${e(doc.title)}</div>
-  <div class="meta">For PCB ${e(config.pcbVersion)} · Updated ${e(doc.date)}</div>
+  <div class="meta">For PCB ${e(config.pcbVersion)} - Updated ${e(doc.date)}</div>
   <div class="meta official">Official version: ${e(config.officialUrl)}</div>
 </header>
 ${body}
@@ -189,7 +189,7 @@ function footer(config, doc) {
   return `
     <div style="font-family: Helvetica, Arial, sans-serif; font-size: 7.5pt; color: #777;
                 width: 100%; margin: 0 16mm; display: flex; justify-content: space-between;">
-      <span>${e(config.product)} · ${e(doc.title)} · PCB ${e(config.pcbVersion)}</span>
+      <span>${e(config.product)} - ${e(doc.title)} - PCB ${e(config.pcbVersion)}</span>
       <span>${e(config.footer)}</span>
       <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
     </div>`;

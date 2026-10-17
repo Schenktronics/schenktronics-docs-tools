@@ -3,7 +3,7 @@
 Shared tooling for Schenktronics product repos:
 
 - **Docs PDFs**: a GitHub Action that builds a product's documentation PDFs from its Markdown docs and commits them.
-- **Packaging labels**: a command that makes print-ready 4 × 6 in thermal labels (box label and insert) for each version of a product. See [Packaging labels](#packaging-labels).
+- **Packaging labels**: a command that makes print-ready 3 x 5 in thermal labels (box label and insert) for each version of a product. See [Packaging labels](#packaging-labels).
 
 It lives in its own repo so product repos stay limited to the device itself: KiCad files, gerbers, docs and images. Fixes and improvements here reach every product at once.
 
@@ -20,8 +20,8 @@ A product repo needs two files.
   "repo": "Schenktronics/ST01-multiple",
   "branch": "master",
   "documents": [
-    { "src": "manual.md", "out": "passive-multiple-manual.pdf", "title": "User Manual" },
-    { "src": "assembly-guide.md", "out": "passive-multiple-assembly-guide.pdf", "title": "Assembly Guide" }
+    { "src": "manual.md", "out": "ST-01_Multiple_User_Manual.pdf", "title": "User Manual" },
+    { "src": "assembly-guide.md", "out": "ST-01_Multiple_Assembly_Guide.pdf", "title": "Assembly Guide" }
   ]
 }
 ```
@@ -47,9 +47,9 @@ Whenever the docs change, the Action rebuilds the PDFs into `docs/pdf/` and comm
 | `outDir` | | `.` | Where to write the PDFs, relative to the config file |
 | `logo` | | `images/logo-dark.png` | Cover logo, relative to the docs folder. If the file is missing, the cover shows `brand` as text. |
 | `brand` | | `Schenktronics` | Brand name, used for the logo's alt text or as the text fallback |
-| `officialUrl` | | `github.com/<repo>` | Shown on the cover as "Official version: …", so readers can check a copy against the real thing |
+| `officialUrl` | | `github.com/<repo>` | Shown on the cover as "Official version: ...", so readers can check a copy against the real thing |
 | `qrUrl` | | none | If set, a QR code to this URL goes in the cover's top-right corner, captioned "Latest version". Must start with `https://`. Use the same short URL as the packaging, and set it only once that URL works. |
-| `footer` | | `schenktronics.com · CC BY-NC-SA 4.0` | Middle of the page footer |
+| `footer` | | `schenktronics.com - CC BY-NC-SA 4.0` | Middle of the page footer |
 | `paper` | | `Letter` | Any paper size Chrome supports, for example `A4` |
 
 ### What the PDFs contain
@@ -76,7 +76,7 @@ Don't commit locally built PDFs. A different Chrome version produces slightly di
 
 ## Packaging labels
 
-`pdf/labels.mjs` makes a **box label** and an **insert** for each version of a product (for example "DIY Kit" and "Assembled"), as 4 × 6 in PDFs for a thermal printer. Each label's settings live in a `labels.json` file, which is kept with the product's private packaging files, not in the public product repo.
+`pdf/labels.mjs` makes a **box label** and an **insert** for each version of a product (for example "DIY Kit" and "Assembled"), as 3 x 5 in PDFs for a thermal printer. Each label's settings live in a `labels.json` file, which is kept with the product's private packaging files, not in the public product repo.
 
 ```sh
 node ~/Products/schenktronics-docs-tools/pdf/labels.mjs path/to/labels.json
@@ -93,7 +93,7 @@ node ~/Products/schenktronics-docs-tools/pdf/labels.mjs path/to/labels.json
 | `pcbVersion` | Yes | | PCB revision, for example `v1.0` |
 | `productDir` | Yes | | The product's repo, relative to `labels.json`. Clone repos side by side, for example in `~/Products`. |
 | `url` | Yes | | What the QR code opens. Must start with `https://`. Printed under the code without the `https://`. |
-| `variants` | Yes | | List of `{ id, name, ref, insert }`. `id` names the files (`box-<id>.pdf`, `insert-<id>.pdf`). `ref` is optional — a part/SKU number printed under the version badge on the box label, so the ref is identifiable on the physical label and not just in the parts data. `insert` has `items` (required), plus optional `title`, `thanks`, `qrCaption`, `note`, and `checklist: false` for bullets instead of tick boxes. |
+| `variants` | Yes | | List of `{ id, name, ref, insert }`. `id` names the files (`box-<id>.pdf`, `insert-<id>.pdf`). `ref` is optional: a part/SKU number printed under the version badge on the box label, so the ref is identifiable on the physical label and not just in the parts data. `insert` has `items` (required), plus optional `title`, `thanks`, `qrCaption`, `note`, and `checklist: false` for bullets instead of tick boxes. |
 | `specs` | | none | Short lines listed beside the panel drawing |
 | `logo` | | `docs/images/logo-dark.png` | Relative to `productDir` |
 | `panel` | | `docs/images/panel.svg` | Relative to `productDir`. A version without small captions prints better on thermal labels. |
@@ -104,7 +104,7 @@ node ~/Products/schenktronics-docs-tools/pdf/labels.mjs path/to/labels.json
 
 Thermal printers print pure black only. The labels use black text and lines, and they convert images to black and white, so greys and colours don't turn into speckled patterns. Small grey captions disappear, so use a plain drawing. The QR code uses medium error correction, so a scuffed or slightly faded label still scans.
 
-If a label's content doesn't fit on one 4 × 6 in page, the build fails with a message instead of cutting it off. The printed URL wraps only after a slash, never mid-word.
+If a label's content doesn't fit on one 3 x 5 in page, the build fails with a message instead of cutting it off. The printed URL wraps only after a slash, never mid-word.
 
 Print the PDFs at 100% ("actual size"), not "fit to page".
 

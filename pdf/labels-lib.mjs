@@ -1,4 +1,4 @@
-// Builds 3 × 5 in packaging labels (box label and insert) for thermal printers.
+// Builds 3 x 5 in packaging labels (box label and insert) for thermal printers.
 // See README.md for the config format.
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -23,8 +23,8 @@ const DEFAULTS = {
   specs: [],
 };
 
-// Label size in inches, for the box label and insert - a separate 3 × 5 in
-// direct thermal stock from the 4 × 6 in stock shipping labels use, chosen
+// Label size in inches, for the box label and insert - a separate 3 x 5 in
+// direct thermal stock from the 4 x 6 in stock shipping labels use, chosen
 // to reliably fit inside the packaging box (see products/*/packaging/README.md).
 const WIDTH = 3;
 const HEIGHT = 5;
@@ -134,7 +134,7 @@ export async function insertHtml(config, variant) {
 }
 
 // Builds a box label and an insert for every variant. Returns the paths written.
-// Throws if a label's content doesn't fit on one 4 × 6 in page.
+// Throws if a label's content doesn't fit on one 4 x 6 in page.
 export async function buildLabels(configPath, { log = console.log } = {}) {
   const config = loadLabelConfig(configPath);
   const browser = await puppeteer.launch({ args: ["--allow-file-access-from-files", ...(process.env.CI ? ["--no-sandbox"] : [])] });
@@ -159,7 +159,7 @@ export async function buildLabels(configPath, { log = console.log } = {}) {
         });
         const name = `${kind}-${variant.id}.pdf`;
         if (failures.length) throw new Error(`${name}: couldn't load ${failures.join(", ")}`);
-        if (overflow) throw new Error(`${name}: the content doesn't fit on a ${WIDTH} × ${HEIGHT} in label. Shorten the text in the config.`);
+        if (overflow) throw new Error(`${name}: the content doesn't fit on a ${WIDTH} x ${HEIGHT} in label. Shorten the text in the config.`);
         const pdf = await tab.pdf({ width: `${WIDTH}in`, height: `${HEIGHT}in`, printBackground: true, pageRanges: "1" });
         await tab.close();
         mkdirSync(config.outDir, { recursive: true });

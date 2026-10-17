@@ -32,13 +32,13 @@ describe("building the sample product", () => {
   });
 
   test("replaces the document's own H1 with the cover", () => {
-    assert.ok(!manual.text.includes("Sample Module — User Manual"));
+    assert.ok(!manual.text.includes("Sample Module: User Manual"));
   });
 
   test("puts the footer on every page", () => {
     manual.pages.forEach((page, i) => {
-      assert.ok(page.includes("Sample Module · User Manual · PCB v9.9"), `page ${i + 1} footer`);
-      assert.ok(page.includes("schenktronics.com · CC BY-NC-SA 4.0"), `page ${i + 1} footer`);
+      assert.ok(page.includes("Sample Module - User Manual - PCB v9.9"), `page ${i + 1} footer`);
+      assert.ok(page.includes("schenktronics.com - CC BY-NC-SA 4.0"), `page ${i + 1} footer`);
       assert.ok(page.includes(`Page ${i + 1} of ${manual.pages.length}`), `page ${i + 1} number`);
     });
   });
@@ -58,7 +58,7 @@ describe("building the sample product", () => {
 
   test("renders tables, checklists and blockquotes", () => {
     assert.ok(manual.text.includes("Eurorack, 4HP"));
-    assert.ok(guide.text.includes("1 × PCB"));
+    assert.ok(guide.text.includes("1 x PCB"));
     assert.ok(guide.text.includes("A side note, rendered as a blockquote."));
   });
 
@@ -117,6 +117,6 @@ describe("problems in a product's docs", () => {
       editJson(join(d, "docs/pdf/config.json"), (c) => { c.paper = "A4"; }));
     await buildPdfs(config, silent);
     const bytes = readFileSync(join(dir, "docs/pdf/sample-manual.pdf")).toString("latin1");
-    assert.match(bytes, /\/MediaBox \[0 0 595\.\d+ 841\.\d+\]/, "A4 is 595 × 842 points");
+    assert.match(bytes, /\/MediaBox \[0 0 595\.\d+ 841\.\d+\]/, "A4 is 595 x 842 points");
   });
 });

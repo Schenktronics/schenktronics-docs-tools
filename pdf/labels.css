@@ -1,4 +1,4 @@
-/* 3 × 5 in thermal labels. Thermal printers print pure black only, so there's
+/* 3 x 5 in thermal labels. Thermal printers print pure black only, so there's
    no grey or colour here: images are converted to black and white. */
 @font-face { font-family: Inter; font-weight: 400; src: url("FONT_DIR/inter-latin-400-normal.woff2"); }
 @font-face { font-family: Inter; font-weight: 600; src: url("FONT_DIR/inter-latin-600-normal.woff2"); }
