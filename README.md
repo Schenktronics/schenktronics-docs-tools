@@ -5,20 +5,24 @@ Shared tooling for Schenktronics product repos:
 - **Docs PDFs**: a GitHub Action that builds a product's documentation PDFs from its Markdown docs and commits them.
 - **Packaging labels**: a command that makes print-ready 3 x 5 in thermal labels (box label and insert) for each version of a product. See [Packaging labels](#packaging-labels).
 
-It lives in its own repo so product repos stay limited to the device itself: KiCad files, gerbers, docs and images. Fixes and improvements here reach every product at once.
+It lives in its own repo so product repos stay limited to the device itself: KiCad files, docs, and images. Fixes and improvements here reach every product at once.
 
 ## Using it in a product repo
 
-A product repo needs two files.
+A product repo needs two files, plus a third for publishing.
 
-**1. `docs/pdf/config.json`**
+**1. `.github/pdf-config.json`**
+
+The product repos are customer-facing, so the settings live in `.github/`, out of the way, and `docsDir` and `outDir` point back at `docs/` and `docs/pdf/`:
 
 ```json
 {
-  "product": "Passive Multiple",
-  "pcbVersion": "v1.0",
+  "product": "ST-01 Multiple",
+  "pcbVersion": "v1.1",
   "repo": "Schenktronics/ST01-multiple",
   "branch": "master",
+  "docsDir": "../docs",
+  "outDir": "../docs/pdf",
   "documents": [
     { "src": "manual.md", "out": "ST-01_Multiple_User_Manual.pdf", "title": "User Manual" },
     { "src": "assembly-guide.md", "out": "ST-01_Multiple_Assembly_Guide.pdf", "title": "Assembly Guide" }
@@ -30,9 +34,22 @@ A product repo needs two files.
 
 ```yaml
 - uses: Schenktronics/schenktronics-docs-tools/pdf@v1
+  with:
+    config: .github/pdf-config.json
 ```
 
+(Older product repos keep their settings in `docs/pdf/config.json`, the Action's default, with no `with:` needed.)
+
+**3. `.github/workflows/release-docs.yml`**: copy [`examples/release-docs.yml`](examples/release-docs.yml). See "Publishing" below.
+
 Whenever the docs change, the Action rebuilds the PDFs into `docs/pdf/` and commits any that changed. After updating this repo, run each product's "Build PDFs" workflow by hand from its Actions tab to pick up the change.
+
+In the product repo:
+
+- **Don't edit the PDFs by hand.** Edit the Markdown, and let the Action rebuild them.
+- After you push a docs change, wait a minute, then `git pull` to get the Action's "Rebuild PDFs" commit.
+- **Publishing:** the website's docs pages link to each product's latest GitHub release (`releases/latest/download/<file>`), not to the committed PDFs. Once a rebuild looks right, run the product's "Release docs" workflow (`.github/workflows/release-docs.yml`) by hand from its Actions tab, with a tag such as `docs-2026-10-17`. It publishes every PDF in `docs/pdf/` as a release.
+- The product repos are customer-facing, so keep build notes like these here, not in the product repo: `docs/pdf/` holds only the PDFs. Drawing scripts and other generators live in the private `schenktronics-business` repo, under `products/<repo>/`.
 
 ### Config settings
 
@@ -69,7 +86,7 @@ You need Node.js 22.12 or newer. The first `npm install` downloads a copy of Chr
 ```sh
 cd ~/Products/schenktronics-docs-tools/pdf
 npm install
-node build.mjs ~/Products/ST01-multiple/docs/pdf/config.json
+node build.mjs ~/Products/ST01-multiple/.github/pdf-config.json
 ```
 
 Don't commit locally built PDFs. A different Chrome version produces slightly different files, so let the product's Action build the committed copies. To throw away a local build, run `git checkout -- 'docs/pdf/*.pdf'` in the product repo.

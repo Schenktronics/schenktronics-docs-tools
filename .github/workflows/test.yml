@@ -32,11 +32,17 @@ jobs:
         # Every product repo that uses this builder. Add new ones here.
         product:
           - repo: Schenktronics/ST01-multiple
-            config: docs/pdf/config.json
+            config: .github/pdf-config.json
+            pdfs: docs/pdf
           - repo: Schenktronics/ST02-levels
-            config: docs/pdf/config.json
+            config: .github/pdf-config.json
+            pdfs: docs/pdf
           - repo: Schenktronics/ST03-attenuverter
-            config: docs/pdf/config.json
+            config: .github/pdf-config.json
+            pdfs: docs/pdf
+          - repo: Schenktronics/ST04-quad-mixer
+            config: .github/pdf-config.json
+            pdfs: docs/pdf
     name: ${{ matrix.product.repo }}
     steps:
       - uses: actions/checkout@v7
@@ -56,9 +62,9 @@ jobs:
       - name: Compare with the product's committed PDFs
         working-directory: product
         env:
-          CONFIG: ${{ matrix.product.config }}
+          PDFS: ${{ matrix.product.pdfs }}
         run: |
-          dir=$(dirname "$CONFIG")
+          dir="$PDFS"
           if git diff --quiet -- "$dir"; then
             echo "Output matches the committed PDFs."
           else
