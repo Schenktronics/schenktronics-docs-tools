@@ -40,7 +40,7 @@ export function loadLabelConfig(configPath) {
   }
   const config = { ...DEFAULTS, ...raw };
   const problems = [];
-  for (const key of ["product", "pcbVersion", "productDir", "url"]) {
+  for (const key of ["product", "productDir", "url"]) {
     if (typeof config[key] !== "string" || !config[key]) problems.push(`"${key}" is required`);
   }
   if (config.url && !/^https:\/\//.test(config.url)) problems.push(`"url" must start with https://`);
@@ -104,7 +104,6 @@ export async function boxLabelHtml(config, variant) {
       <ul class="specs">${specs}</ul>
       <div class="qr">${await qrSvg(config.url)}</div>
       <div class="url">${urlHtml(config.url)}</div>
-      <div class="pcb">PCB ${e(config.pcbVersion)}</div>
     </div>
   </section>
   <footer class="prop65">${e(config.prop65)}</footer>`);

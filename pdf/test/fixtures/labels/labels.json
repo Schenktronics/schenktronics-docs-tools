@@ -1,6 +1,5 @@
 {
   "product": "Sample Module",
-  "pcbVersion": "v9.9",
   "productDir": "../sample-product",
   "panel": "docs/images/drawing.svg",
   "url": "https://example.com/sample-module",

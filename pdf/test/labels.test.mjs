@@ -45,9 +45,11 @@ describe("building labels", () => {
     const text = pdfs["box-kit.pdf"].text;
     // The version badge is set in capitals.
     assert.match(text, /DIY KIT/i);
-    for (const want of ["Sample Module", "4HP Eurorack", "PCB v9.9"]) {
+    for (const want of ["Sample Module", "4HP Eurorack"]) {
       assert.ok(text.includes(want), `box label is missing "${want}"`);
     }
+    // No PCB version: labels shouldn't need reprinting for a board revision.
+    assert.ok(!text.includes("PCB v"), "box label doesn't print a PCB version");
     assert.ok(text.replace(/\s+/g, "").includes("example.com/sample-module"), "box label has the URL");
     assert.ok(text.replace(/\s+/g, " ").includes(PROP65_LEAD.replace("⚠ ", "")), "box label has the lead warning");
     assert.match(pdfs["box-assembled.pdf"].text, /ASSEMBLED/i);
@@ -90,9 +92,9 @@ describe("label problems", () => {
   });
 
   test("checks the required settings", () => {
-    const { config } = makeLabels((c) => { c.url = "http://insecure.example.com"; c.variants[0].id = "Kit One"; delete c.pcbVersion; });
+    const { config } = makeLabels((c) => { c.url = "http://insecure.example.com"; c.variants[0].id = "Kit One"; delete c.product; });
     assert.throws(() => loadLabelConfig(config), (e) => {
-      assert.match(e.message, /"pcbVersion" is required/);
+      assert.match(e.message, /"product" is required/);
       assert.match(e.message, /"url" must start with https:\/\//);
       assert.match(e.message, /variants\[0\]\.id may only use/);
       return true;

@@ -99,7 +99,7 @@ Don't commit locally built PDFs. A different Chrome version produces slightly di
 node ~/Products/schenktronics-docs-tools/pdf/labels.mjs path/to/labels.json
 ```
 
-- **Box label:** logo, product name, version badge, part ref (if set), panel drawing, specs, QR code with its URL, PCB version, and the short Prop 65 warning for lead.
+- **Box label:** logo, product name, version badge, part ref (if set), panel drawing, specs, QR code with its URL, and the short Prop 65 warning for lead.
 - **Insert:** thank-you line, a large QR code with its URL, and a checklist (kits) or quick-start notes (assembled modules).
 
 ### Label settings
@@ -107,7 +107,6 @@ node ~/Products/schenktronics-docs-tools/pdf/labels.mjs path/to/labels.json
 | Setting | Required | Default | Meaning |
 |---------|----------|---------|---------|
 | `product` | Yes | | Product name |
-| `pcbVersion` | Yes | | PCB revision, for example `v1.0` |
 | `productDir` | Yes | | The product's repo, relative to `labels.json`. Clone repos side by side, for example in `~/Products`. |
 | `url` | Yes | | What the QR code opens. Must start with `https://`. Printed under the code without the `https://`. |
 | `variants` | Yes | | List of `{ id, name, ref, insert }`. `id` names the files (`box-<id>.pdf`, `insert-<id>.pdf`). `ref` is optional: a part/SKU number printed under the version badge on the box label, so the ref is identifiable on the physical label and not just in the parts data. `insert` has `items` (required), plus optional `title`, `thanks`, `qrCaption`, `note`, and `checklist: false` for bullets instead of tick boxes. |
